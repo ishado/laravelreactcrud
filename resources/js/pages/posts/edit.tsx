@@ -1,5 +1,5 @@
 import React from 'react';
-import { Head, Link, useForm, router } from '@inertiajs/react';
+import { Head, useForm, router } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 
@@ -21,7 +21,8 @@ interface EditPostProps {
 
 export default function EditPost({ post }: EditPostProps) {
     // Form state managed by Inertia's useForm
-    const { data, setData, errors, put, processing, isDirty, reset } = useForm({
+    // REMOVED 'reset' from destructuring as it was unused
+    const { data, setData, errors, put, processing, isDirty } = useForm({
         title: post.title || '', // Provide default empty string just in case
         content: post.content || '', // Provide default empty string just in case
     });

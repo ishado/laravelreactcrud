@@ -1,5 +1,5 @@
 import React from 'react';
-import { Head, Link, useForm, router } from '@inertiajs/react'; // Import router
+import { Head, useForm, router } from '@inertiajs/react'; // Import router
 import AppLayout from '@/layouts/app-layout'; // Adjust path if needed
 import { type BreadcrumbItem } from '@/types'; // Adjust path if needed
 // Assuming you have a route helper configured for React similar to Ziggy in Laravel/Vue
@@ -14,7 +14,8 @@ import { type BreadcrumbItem } from '@/types'; // Adjust path if needed
 
 export default function CreatePost(/* props: CreatePostProps */) {
     // Form state managed by Inertia's useForm
-    const { data, setData, errors, post, processing, reset } = useForm({
+    // REMOVED 'reset' from destructuring as it was unused
+    const { data, setData, errors, post, processing } = useForm({
         title: '',
         content: '',
     });
@@ -39,7 +40,7 @@ export default function CreatePost(/* props: CreatePostProps */) {
             onSuccess: () => {
                 // showToast('Post created successfully!');
                 // Backend usually redirects. If not, you might reset the form:
-                // reset();
+                // reset(); // The reset function would need to be destructured above if uncommented
             },
             onError: (formErrors) => {
                 console.error('Form submission errors:', formErrors);

@@ -1,7 +1,7 @@
 import React from 'react'; // Import React for type definitions like React.FC
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, router } from '@inertiajs/react'; // Import router for potential programmatic navigation or state preservation
+import { Head, Link } from '@inertiajs/react'; // Import router if needed elsewhere, but not for the delete button in this version
 
 // Define a type for the Post object for better type safety
 interface Post {
@@ -29,34 +29,14 @@ const BREADCRUMBS: BreadcrumbItem[] = [
 // Component Definition using React.FC for functional components with props typing
 const Posts: React.FC<PostsProps> = ({ posts }) => {
 
-  // Handler for the delete confirmation logic
-  const handleDeleteClick = (e: React.MouseEvent<HTMLAnchorElement>, postId: number | string) => {
-    e.preventDefault(); // Prevent the link default action initially
-    if (confirm('Are you sure you want to delete this post?')) {
-        // Use Inertia's router.delete for better state handling potentially
-        // preserveScroll helps keep the user's scroll position after deletion
-        router.delete(route('posts.destroy', postId), {
-            preserveScroll: true,
-            // Optional: Add onSuccess/onError handlers
-            // onSuccess: () => { console.log('Deleted successfully'); },
-            // onError: (errors) => { console.error('Deletion failed:', errors); },
-        });
-        // Or, if you prefer the simple Link approach (as originally used):
-        // Manually trigger the navigation after confirmation if needed,
-        // but the original Link method="delete" with onClick prevention should work fine.
-        // However, explicitly using router.delete is often clearer for actions.
-        // For the original approach to work after confirm: Remove e.preventDefault()
-        // and let the Link proceed if confirmed. Let's revert to the simpler way
-        // by removing the manual router call here and adjusting the Link's onClick.
-    }
-  };
+  // REMOVED the unused handleDeleteClick function
 
-   // Simplified delete handler for Link's onClick
-   const confirmAndDelete = (e: React.MouseEvent<HTMLAnchorElement>) => {
-       if (!confirm('Are you sure you want to delete this post?')) {
-           e.preventDefault(); // Prevent navigation if cancelled
-       }
-   };
+  // Simplified delete handler for Link's onClick
+  const confirmAndDelete = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => { // Adjusted type hint slightly for as="button"
+      if (!confirm('Are you sure you want to delete this post?')) {
+          e.preventDefault(); // Prevent navigation/action if cancelled
+      }
+  };
 
 
   return (
